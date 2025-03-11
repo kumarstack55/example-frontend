@@ -1,0 +1,26 @@
+services:
+  frontend-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: example-frontend:latest
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  backend-service:
+    image: example-backend:latest
+    container_name: backend
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
