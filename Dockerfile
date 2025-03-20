@@ -1,13 +1,14 @@
 FROM node:23.7.0
 
-WORKDIR /app
+ENV APP_HOME="/app"
 
-COPY package.json /app
-COPY package-lock.json /app
+WORKDIR ${APP_HOME}
+
+COPY package*.json ${APP_HOME}/
 
 RUN npm ci
 
-COPY . /app
+COPY . ${APP_HOME}/
 
 RUN npx next build
 
